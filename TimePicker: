@@ -1,0 +1,28 @@
+private TextView textSelectedTime;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        textSelectedTime = findViewById(R.id.tx1);
+        Button buttonPickTime = findViewById(R.id.btn1);
+
+      
+        buttonPickTime.setOnClickListener(v -> onClickPick());
+    }
+
+
+    private void onClickPick() {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+
+        new TimePickerDialog(this, (view, hourOfDay, minute1) -> {
+            String time = String.format("%02d:%02d", hourOfDay, minute1);
+            textSelectedTime.setText("Selected Time: " + time);
+        }, hour, minute, true).show();
+    }
+}
+
