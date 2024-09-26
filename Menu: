@@ -1,0 +1,24 @@
+@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.activity_main_menu, menu);
+    return true;
+}
+
+
+@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+    int itemId = item.getItemId();
+    if (itemId == R.id.new_mail) {
+        Toast.makeText(this, "A new mail is composed", Toast.LENGTH_LONG).show();
+        return true;
+    } else if (itemId == R.id.reply) {
+        Toast.makeText(this, "A new mail is Replied", Toast.LENGTH_LONG).show();
+        return true;
+    } else if (itemId == R.id.forward) {
+        Toast.makeText(this, "Forward action selected", Toast.LENGTH_LONG).show();
+        // Optionally change the content view or perform another action
+        setContentView(R.layout.activity_main2);
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
+}
