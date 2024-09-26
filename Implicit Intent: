@@ -1,0 +1,26 @@
+public class MainActivity extends AppCompatActivity {
+
+   EditText uname,pass;
+
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       EdgeToEdge.enable(this);
+       setContentView(R.layout.activity_main);
+
+       uname = findViewById(R.id.username);
+       pass = findViewById(R.id.password);
+   }
+
+
+   public void onClickLogin(View view){
+if (uname.getText().toString().equals("ronit")&& pass.getText().toString().equals("123")){
+   Intent i = new Intent(this, Activity2.class);
+   startActivity(i);
+}else {
+   Toast.makeText(this,"incorrect username or password",Toast.LENGTH_SHORT).show();
+}
+   }
+}
+
