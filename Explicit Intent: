@@ -1,0 +1,84 @@
+package com.example.myapplication1;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    EditText uname, uphone;
+    RadioGroup rgroup;
+    RadioButton rButton1, rButton2;
+    CheckBox cbox1, cbox2, cbox3, cbox4;
+
+    @SuppressLint("MissingInflatedId")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        uname = findViewById(R.id.name);
+        uphone = findViewById(R.id.phone);
+        rgroup = findViewById(R.id.rg1);
+        rButton1 = findViewById(R.id.rb1);
+        rButton2 = findViewById(R.id.rb2);
+        cbox1 = findViewById(R.id.cb1);
+        cbox2 = findViewById(R.id.cb2);
+        cbox3 = findViewById(R.id.cb3);
+        cbox4 = findViewById(R.id.cb4);
+    }
+
+    public void submitform(View view) {
+       String name = uname.getText().toString().trim();
+       String phone= uphone.getText().toString().trim();
+
+       if(name.isEmpty()){
+           showToast("Enter name");
+           return;
+       }
+       if(rgroup.getCheckedRadioButtonId()==-1){
+           showToast("Select gender");
+           return;
+       }
+       String gender="";
+       int selectGenderId=rgroup.getCheckedRadioButtonId();
+       if(selectGenderId==R.id.rb1){
+           gender="Male";
+       } else if (selectGenderId==R.id.rb2) {
+           gender="Female";
+       }
+       StringBuilder hobbies= new StringBuilder();
+       if(cbox1.isChecked()){
+           hobbies.append("Reading, ");
+       }
+        if(cbox2.isChecked()){
+            hobbies.append("Sports, ");
+        }
+        if(cbox3.isChecked()){
+            hobbies.append("Music, ");
+        }
+        if(cbox4.isChecked()){
+            hobbies.append("Travel, ");
+        }
+        if (phone.isEmpty()){
+            showToast("Enter phone number");
+            return;
+        }
+        StringBuilder message=new StringBuilder();
+        message.append("Name: ").append(name).append("\n");
+        message.append("Gender: ").append(gender).append("\n");
+        message.append("Hobbies: ").append(hobbies).append("\n");
+        message.append("Phone: ").append(phone);
+
+        showToast(message.toString());
+    }
+    private void showToast(String message) {
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+}
+
