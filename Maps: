@@ -1,0 +1,102 @@
+public class MapsActivity extends FragmentActivity implements
+       OnMapReadyCallback, GoogleMap.OnMapClickListener {
+   private GoogleMap mMap;
+   private ActivityMapsBinding binding;
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       binding = ActivityMapsBinding.inflate(getLayoutInflater());
+       setContentView(binding.getRoot());
+       SupportMapFragment mapFragment = (SupportMapFragment)
+               getSupportFragmentManager()
+                       .findFragmentById(R.id.map);
+       mapFragment.getMapAsync(this);
+   }
+   @Override
+   public void onMapReady(GoogleMap googleMap) {
+       mMap = googleMap;
+       LatLng sydney = new LatLng(-34, 151);
+       mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+       mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+       mMap.setOnMapClickListener(this);
+   }
+   @Override
+   public void onMapClick(@NonNull LatLng latLng) {
+       Toast.makeText(this, latLng.toString(), Toast.LENGTH_SHORT).show();
+   }
+}
+
+
+File: Map Fragment:
+code:
+public class MapsFragment extends Fragment {
+   private OnMapReadyCallback callback = new OnMapReadyCallback() {
+       @Override
+       public void onMapReady(GoogleMap googleMap) {
+           LatLng sydney = new LatLng(-34, 151);
+           googleMap.addMarker(new
+                   MarkerOptions().position(sydney).title("Marker in Sydney"));
+           googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+       }
+   };
+   @Nullable
+   @Override
+   public View onCreateView(@NonNull LayoutInflater inflater,
+                            @Nullable ViewGroup container,
+                            @Nullable Bundle savedInstanceState) {
+       return inflater.inflate(R.layout.fragment_maps, container, false);
+   }
+   @Override
+   public void onViewCreated(@NonNull View view, @Nullable Bundle
+           savedInstanceState) {
+       super.onViewCreated(view, savedInstanceState);
+       SupportMapFragment mapFragment =
+               (SupportMapFragment)
+                       getChildFragmentManager().findFragmentById(R.id.map);
+       if (mapFragment != null) {
+           mapFragment.getMapAsync(callback);
+       }
+   }
+}
+
+File: Manifest:
+code:
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:tools="http://schemas.android.com/tools">
+
+   <application
+       android:allowBackup="true"
+       android:dataExtractionRules="@xml/data_extraction_rules"
+       android:fullBackupContent="@xml/backup_rules"
+       android:icon="@mipmap/ic_launcher"
+       android:label="@string/app_name"
+       android:roundIcon="@mipmap/ic_launcher_round"
+       android:supportsRtl="true"
+       android:theme="@style/Theme.MyApplication"
+       tools:targetApi="31">
+
+       <meta-data
+       android:name="com.google.android.geo.API_KEY"
+       android:value="AIzaSyAA6Hs9FLqrUXuuHZK2G-SxFWJbSiwCopI" />
+       <activity
+           android:name=".MapsActivity"
+           android:exported="true"
+           >
+           <intent-filter>
+               <action android:name="android.intent.action.MAIN" />
+
+               <category android:name="android.intent.category.LAUNCHER" />
+           </intent-filter>
+       </activity>
+       <activity
+       android:name=".MainActivity"
+       android:exported="false">
+       </activity>
+
+
+   </application>
+
+</manifest>
+
+For newer version
